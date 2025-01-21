@@ -158,6 +158,25 @@ app.post('/savefile/:filename', (req, res) => {
 });
 
 
+// function for deleting the file in the db
+app.post('/deletefile/:filename', (req, res) => {
+    const filename = req.params.filename;
+
+    console.log('filename: ' + filename);
+
+    try {
+        // Delete file
+        const sql = db.prepare('DELETE FROM mdfiles WHERE mdfilename = ?');
+        sql.run(filename);
+
+        res.status(200).json({ message: 'File deleted successfully' });
+    } catch (err) {
+        console.error('Database error:', err.message);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+
 
 app.post('/flogin', formhandlerlog);
 

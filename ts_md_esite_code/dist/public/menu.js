@@ -40,37 +40,6 @@ async function editmenuf() {
         return console.log("Invalid role: " + data);
     }
 }
-// const editbutton = document.getElementById('editmenubtn') as HTMLButtonElement; 
-//editbutton.onclick = editmenuf;
 window.onload = editmenuf;
 export {};
-// // function for sending file to server.ts
-// function uploadnewfilef() {
-//     const contentElement = document.getElementById('cnfbtn') //some element in the html with text content
-//     // const filopplastning = contentElement.innerText; //get the text content of the element
-//     const body = {
-//         filopplastning: 'Hello world' + contentElement.innerText,
-//     };
-//     // send the data
-//     sendData();
-//     // function to send the data
-//     async function sendData() {
-//         // send the data to the server
-//         const response = await fetch('/sendfilebody', {
-//          method: 'POST',
-//             headers: {
-//                 'Content-Type': 'application/json',
-//             },
-//             body: JSON.stringify(body), //stringify the body
-//         });
-//         if (!response.ok) {
-//             throw new Error('Network response was not ok'); 
-//         }
-//         // get the response from the server
-//         const filopplastning = await response.text();
-//         console.log(filopplastning);
-//     }
-// }
-// const uploadnfbutton = document.getElementById('unfbtn') as HTMLButtonElement;
-// uploadnfbutton.onclick = uploadnewfilef;
 //# sourceMappingURL=menu.js.map

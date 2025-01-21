@@ -81,6 +81,27 @@ async function saveMarkDownToDB(filename: string, content: string) {
   console.log('File saved successfully');
 }
 
+async function deletemarkdownf(filename: string) {
+  //Warning!!! deleted files are not recoverable !!!
+  if (false && localStorage.getItem('user_manual_role') == 'admin') {
+    const dontCancel = confirm("Are yu sure you want to delete this file? Warning!!! deleted files are not recoverable !!!");
+    if (!dontCancel) return;
+  }
+
+  const url = './deletefile/' + filename;
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  });
+
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+
+  console.log('File deleted successfully');
+}
 
 let datetemp = "";
 
@@ -339,6 +360,15 @@ async function loadAndDisplayCurrentFilesInNavn(){
     listItem.onclick = async () => {
       await loadMarkDownFromDB(filename);
     }
+
+    const generatedelbtn = document.createElement('button') as HTMLButtonElement;
+    generatedelbtn.innerText = 'Delete';
+    generatedelbtn.onclick = async () => {
+      await deletemarkdownf(filename);
+    }
+
+    listItem.appendChild(generatedelbtn)
+
     documentList.appendChild(listItem);
   });
 }
