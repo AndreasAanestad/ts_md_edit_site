@@ -35,9 +35,15 @@ async function loadMarkDownFromDB(filename) {
             return;
     }
     const contentElement = document.getElementById('contents');
-    currentMarkdownDocument = await response.json();
+    const fileAndDate = await response.json();
+    console.log('fileAndDate', fileAndDate);
+    currentMarkdownDocument = fileAndDate.content;
+    console.log('currentMarkdownDocument', currentMarkdownDocument);
     currentFileName = filename;
     contentElement.innerHTML = marked.parse(currentMarkdownDocument);
+    const niceEuropeanDate = new Date(fileAndDate.date).toLocaleDateString('no-NO', { year: 'numeric', month: '2-digit', day: '2-digit' });
+    const dateElement = document.getElementById('pagelastm');
+    dateElement.innerHTML = "Last edited: " + niceEuropeanDate;
 }
 //makes a new file or updates an existing file
 async function saveMarkDownToDB(filename, content) {
@@ -59,17 +65,15 @@ async function saveMarkDownToDB(filename, content) {
     }
     console.log('File saved successfully');
 }
-// const updatebutton = document.getElementById('updatebtn') as HTMLButtonElement;
-// updatebutton.onclick = decompdataf;
-let datetemp = "";
-//gets date from server
-async function lasteditedf() {
-    const response = await fetch("/lasteditedtext");
-    const data = await response.text();
-    datetemp = data;
-    console.log("last modeified " + datetemp);
-    document.getElementById('pagelastm').innerHTML = "this page was last modeified on " + datetemp;
-}
+// let datetemp = "";
+// //gets date from server
+// async function lasteditedf() {
+//   const response = await fetch("/lasteditedtext");
+//   const data = await response.text();
+//   datetemp = data;
+//   console.log("last modeified " + datetemp);
+//   document.getElementById('pagelastm').innerHTML = "this page was last modeified on " + datetemp;
+// }
 //function for editing the markdown
 async function editf() {
     const response = await fetch("/userroleraw");
@@ -248,7 +252,7 @@ async function loadAndDisplayCurrentFilesInNavn() {
     });
 }
 await loadAndDisplayCurrentFilesInNavn();
-await lasteditedf();
+// await lasteditedf();
 try {
     await loadMarkDownFromDB("Velkommen");
 }
